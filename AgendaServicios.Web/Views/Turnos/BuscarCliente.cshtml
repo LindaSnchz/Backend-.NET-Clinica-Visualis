@@ -1,0 +1,49 @@
+﻿@model AgendaServicios.Web.Models.Cliente
+
+@{
+	ViewData["Title"] = "Buscar Paciente";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (ViewBag.ErrorMessage != null)
+{
+	<div class="alert alert-danger">
+		@ViewBag.ErrorMessage
+	</div>
+}
+
+@if (Model != null)
+{
+	<div>
+		<p>Apellido: @Model.Apellido</p>
+		<p>Nombre: @Model.Nombre</p>
+		<p>Email: @Model.CorreoElectronico</p>
+
+		<form asp-action="IniciarReservaTurno">
+			<div class="form-group">
+				<input type="hidden" name="clienteId" value="@Model.ClienteId" />
+				<input type="submit" value="Reservar turno" class="btn btn-sm btn-primary" />
+				@Html.ActionLink("Cerrar", "Index", "Home", null, new { @class = "btn btn-sm btn-secondary" })
+			</div>
+		</form>
+	</div>
+}
+else
+{
+	<form asp-action="BuscarCliente" method="post">
+		<div class="form-group">
+			<label for="numeroDocumento">Número de Documento</label>
+			<input type="text" class="form-control" id="numeroDocumento" name="numeroDocumento" placeholder="Ingrese número de documento" pattern="^[0-9]+$" title="Por favor, ingrese solo dígitos.">
+
+		</div>
+		<div class="form-group">
+			<label for="email">Email</label>
+			<input type="email" class="form-control" id="email" name="email" placeholder="Ingrese email">
+		</div>
+		<div class="form-group">
+			<button type="submit" class="btn btn-sm btn-default btn-primary">Buscar</button>
+			@Html.ActionLink("Cerrar", "Index", "Home", null, new { @class = "btn btn-sm btn-secondary" })
+		</div>
+	</form>
+}
